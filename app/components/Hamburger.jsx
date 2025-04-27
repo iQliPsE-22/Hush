@@ -13,6 +13,16 @@ const Hamburger = ({ setCurrentChat }) => {
     userData.allusers || []
   );
   const [activeTab, setActiveTab] = useState("chats");
+  const [profilePicture, setProfilePicture] = useState(null);
+
+  useEffect(() => {
+    if (userData?.profilePicture?.data) {
+      const uint8Array = new Uint8Array(userData.profilePicture.data.data);
+      const base64String = btoa(String.fromCharCode(...uint8Array));
+      const imageSrc = `data:${userData.profilePicture.contentType};base64,${base64String}`;
+      setProfilePicture(imageSrc);
+    }
+  }, [userData]);
 
   useEffect(() => {
     if (keyword.trim() === "") {
@@ -25,23 +35,6 @@ const Hamburger = ({ setCurrentChat }) => {
     }
   }, [keyword, userData.allusers]);
 
-  // Add some sample last messages for demo purposes
-  const getRandomLastMessage = (index) => {
-    const messages = [
-      "Hey, how are you?",
-      "Did you see that?",
-      "Let's meet tomorrow",
-      "Thanks for the info!",
-      "I'll call you later",
-      "Check this out!",
-      "Can you help me with something?",
-      "What's up?",
-      "See you soon!",
-      "That's awesome!",
-    ];
-    return messages[index % messages.length];
-  };
-
   return (
     <div className="h-dvh w-full bg-black text-white flex flex-col">
       {/* Header */}
@@ -49,14 +42,14 @@ const Hamburger = ({ setCurrentChat }) => {
         <div className="flex items-center">
           <Link href="/profile">
             <Image
-              src={userData.profilePicture}
+              src={profilePicture}
               alt="profile"
               width={40}
               height={40}
               className="rounded-full border border-gray-700"
             />
           </Link>
-          <h2 className="ml-3 font-medium">Hush</h2>
+          <h2 className="ml-3 font-medium">{userData.name}</h2>
         </div>
         <div className="flex space-x-2">
           <button className="p-2 rounded-full hover:bg-[#282828] transition-colors">

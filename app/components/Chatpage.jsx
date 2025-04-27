@@ -164,7 +164,7 @@ const Chatpage = ({ currentChat }) => {
   return (
     <section className="lg:p-2 pb-0 flex flex-col h-full">
       {/* Chat Header */}
-      <div className="bg-[#1A1A1A] p-3 flex items-center justify-between sticky top-0 z-10 shadow-md">
+      <div className="bg-[#1A1A1A] p-3 flex items-center justify-between sticky top-0 z-0 shadow-md">
         <div className="flex items-center">
           <button
             onClick={handleBackClick}

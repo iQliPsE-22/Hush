@@ -1,36 +1,41 @@
-"use client"
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { Menu, Search, Bell, Moon, User, Settings } from "lucide-react"
-import { useUser } from "../UserContext"
+"use client";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Menu, Search, Bell, Moon, User, Settings } from "lucide-react";
+import { useUser } from "../UserContext";
 
 const Header = ({ toggleSidebar }) => {
-  const { userData } = useUser()
-  const [profileImage, setProfileImage] = useState("/profile.svg") // Default profile image
-  const [showDropdown, setShowDropdown] = useState(false)
+  const { userData } = useUser();
+  const [profileImage, setProfileImage] = useState("/profile.svg"); // Default profile image
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     if (userData?.profilePicture?.data?.data) {
-      const byteArray = new Uint8Array(userData.profilePicture.data.data)
-      const blob = new Blob([byteArray], { type: userData.profilePicture.contentType || "image/jpeg" })
-      const imageUrl = URL.createObjectURL(blob)
+      const byteArray = new Uint8Array(userData.profilePicture.data.data);
+      const blob = new Blob([byteArray], {
+        type: userData.profilePicture.contentType || "image/jpeg",
+      });
+      const imageUrl = URL.createObjectURL(blob);
 
-      setProfileImage(imageUrl)
+      setProfileImage(imageUrl);
 
-      return () => URL.revokeObjectURL(imageUrl)
+      return () => URL.revokeObjectURL(imageUrl);
     }
-  }, [userData?.profilePicture])
+  }, [userData?.profilePicture]);
 
   const handleProfileClick = () => {
-    setShowDropdown(!showDropdown)
-  }
+    setShowDropdown(!showDropdown);
+  };
 
   return (
     <div className="bg-black sticky top-0 z-10">
       <div className="flex justify-between items-center p-3 border-b border-gray-800">
         <div className="flex items-center">
-          <button onClick={toggleSidebar} className="p-2 rounded-full hover:bg-[#282828] transition-colors">
+          <button
+            onClick={toggleSidebar}
+            className="p-2 rounded-full hover:bg-[#282828] transition-colors"
+          >
             <Menu size={22} className="text-white" />
           </button>
 
@@ -43,7 +48,9 @@ const Header = ({ toggleSidebar }) => {
               quality={100}
               className="rounded-full"
             />
-            <span className="ml-2 font-semibold text-lg hidden sm:block">Hush</span>
+            <span className="ml-2 font-semibold text-lg hidden sm:block">
+              Hush
+            </span>
           </Link>
         </div>
 
@@ -79,22 +86,33 @@ const Header = ({ toggleSidebar }) => {
             </button>
 
             {showDropdown && (
-              <div className="absolute right-0 mt-2 w-48 bg-[#1A1A1A] rounded-lg shadow-lg py-1 z-20">
-                <Link href="/profile" className="block px-4 py-2 text-sm text-white hover:bg-[#282828]">
+              <div className="absolute right-0 z-20 mt-2 w-48 bg-[#1A1A1A] rounded-lg shadow-lg py-1">
+                <Link
+                  href="/profile"
+                  className="block px-4 py-2 text-sm text-white hover:bg-[#282828]"
+                >
                   <User size={16} className="inline mr-2" /> Profile
                 </Link>
-                <Link href="/settings" className="block px-4 py-2 text-sm text-white hover:bg-[#282828]">
+                <Link
+                  href="/settings"
+                  className="block px-4 py-2 text-sm text-white hover:bg-[#282828]"
+                >
                   <Settings size={16} className="inline mr-2" /> Settings
                 </Link>
                 <hr className="border-gray-800 my-1" />
-                <button className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-[#282828]">Log out</button>
+                <Link
+                  href="/login"
+                  className="block w-full px-4 py-2 text-sm text-red-500 hover:bg-[#282828]"
+                >
+                  Log out
+                </Link>
               </div>
             )}
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
