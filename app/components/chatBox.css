@@ -1,0 +1,49 @@
+.text-box {
+  max-width: 70%;
+  word-wrap: break-word;
+  transition: all 0.2s ease;
+}
+
+.text-box:hover {
+  transform: translateY(-1px);
+}
+
+@media screen and (max-width: 768px) {
+  .text-box {
+    max-width: 85%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  display: block;
+}
+
+::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
